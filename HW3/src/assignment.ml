@@ -9,7 +9,7 @@ module ReadableString : Readable with type t = string list and type arg = string
   type t = string list
 
   type arg = string
-
+ 
   let begin_read arg = 
     String.split_on_char '\n' arg;;
     
