@@ -4,6 +4,14 @@ let filter p xs = failwith "TODO filter"
 
 let starts_with haystack hay = failwith "TODO starts_with"
 
+module type Readable = sig
+  type t
+  type arg
+  val begin_read : arg -> t
+  val end_read : t -> unit
+  val at_end : t -> bool
+  val read_line : t -> (t * string)
+end
 
 module ReadableString : Readable with type t = string list and type arg = string  = struct
   type t = string list
@@ -44,15 +52,6 @@ module ReadableFile : Readable with type t = in_channel * (string option) and ty
 
   let end_read (ic, _) : unit =
     close_in ic      
-end
-
-module type Readable = sig
-  type t
-  type arg
-  val begin_read : arg -> t
-  val end_read : t -> unit
-  val at_end : t -> bool
-  val read_line : t -> (t * string)
 end
 
 module Reader (Rd: Readable) : sig
